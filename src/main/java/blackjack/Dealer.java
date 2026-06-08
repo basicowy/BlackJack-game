@@ -6,6 +6,6 @@ public class Dealer extends Player {
     }
 
     public boolean shouldHit() {
-        return getHand().getScore() < 17;
+        return getHand().getBestValue() < 17;
     }
 }
