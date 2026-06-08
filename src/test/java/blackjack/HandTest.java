@@ -11,7 +11,8 @@ class HandTest {
     @Test
     void shouldAddCardToHand() {
         Hand hand = new Hand();
-        Card card = new Card("HEARTS", "TEN", 10);
+        // Zmieniono Stringi na Enumy
+        Card card = new Card(Suit.HEARTS, Rank.TEN, 10);
 
         hand.addCard(card);
 
@@ -23,8 +24,9 @@ class HandTest {
     void shouldCalculateSimpleHandValue() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card("HEARTS", "TEN", 10));
-        hand.addCard(new Card("SPADES", "FIVE", 5));
+        // Zmieniono Stringi na Enumy
+        hand.addCard(new Card(Suit.HEARTS, Rank.TEN, 10));
+        hand.addCard(new Card(Suit.SPADES, Rank.FIVE, 5));
 
         assertEquals(15, hand.getBestValue());
     }
@@ -33,8 +35,9 @@ class HandTest {
     void shouldClearHand() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card("HEARTS", "TEN", 10));
-        hand.addCard(new Card("SPADES", "FIVE", 5));
+        // Zmieniono Stringi na Enumy
+        hand.addCard(new Card(Suit.HEARTS, Rank.TEN, 10));
+        hand.addCard(new Card(Suit.SPADES, Rank.FIVE, 5));
 
         hand.clear();
 
