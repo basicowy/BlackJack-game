@@ -1,15 +1,15 @@
 package blackjack;
 
 public class Card {
-    private final String suit;
-    private final String rank;
+    private final Suit suit;
+    private final Rank rank;
     private final int value;
 
-    public Card(String suit, String rank, int value) {
-        if (suit == null || suit.isBlank()) {
+    public Card(Suit suit, Rank rank, int value) {
+        if (suit == null) {
             throw new IllegalArgumentException("Suit cannot be blank");
         }
-        if (rank == null || rank.isBlank()) {
+        if (rank == null) {
             throw new IllegalArgumentException("Rank cannot be blank");
         }
         if (value < 1) {
@@ -21,9 +21,9 @@ public class Card {
         this.value = value;
     }
 
-    public String getSuit() { return suit; }
+    public Suit getSuit() { return suit; }
 
-    public String getRank() { return rank; }
+    public Rank getRank() { return rank; }
 
     public int getValue() { return value; }
 
