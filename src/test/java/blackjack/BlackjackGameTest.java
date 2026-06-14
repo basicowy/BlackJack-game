@@ -66,10 +66,16 @@ class BlackjackGameTest {
                 card(Rank.TEN),
                 card(Rank.EIGHT),
                 card(Rank.SIX),
-                card(Rank.KING)
+                card(Rank.KING),
+
+                card(Rank.TWO),
+                card(Rank.THREE),
+                card(Rank.FOUR),
+                card(Rank.FIVE),
+                card(Rank.SEVEN)
         ));
 
-        game.startRound(10); // bet 10
+        game.startRound(10);
         assertEquals(18, game.getPlayer().getHand().getBestValue());
         assertEquals(16, game.getDealer().getHand().getBestValue());
 
