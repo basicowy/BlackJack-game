@@ -54,10 +54,10 @@ public class BlackjackGame {
         player.placeBet(bet);
         lastResult = null;
 
-        player.getHand().addCard(drawCard());
-        dealer.getHand().addCard(drawCard());
-        player.getHand().addCard(drawCard());
-        dealer.getHand().addCard(drawCard());
+        player.getHand().addCard(deck.draw());
+        dealer.getHand().addCard(deck.draw());
+        player.getHand().addCard(deck.draw());
+        dealer.getHand().addCard(deck.draw());
 
         state = GameState.PLAYER_TURN;
         if (player.getHand().getBestValue() == BLACKJACK_SCORE) {
