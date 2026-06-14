@@ -29,6 +29,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank + ((value < 10) ? " [" + value + "]" : "") + " of " + suit;
+        String displayValue = (value < 10 || rank == Rank.TEN) ? " (" + value + ")" : "";
+        return rank + displayValue + " of " + suit;
     }
 }

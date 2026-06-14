@@ -25,7 +25,7 @@ class ConsoleUITest {
         ui.displayHands(player, dealer, true);
 
         String text = capturedText();
-        assertTrue(text.contains("Karty gracza: TEN of HEARTS, FIVE of CLUBS"));
+        assertTrue(text.contains("Karty gracza: TEN (10) of HEARTS, FIVE (5) of CLUBS"));
         assertTrue(text.contains("Punkty gracza: 15"));
         assertTrue(text.contains("Karty krupiera: KING of SPADES, [ukryta karta]"));
         assertTrue(text.contains("Punkty krupiera: ?"));
