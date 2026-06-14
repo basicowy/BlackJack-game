@@ -47,6 +47,10 @@ public class InputHandler {
                 case "D":
                 case "DOUBLE":
                     return Move.DOUBLE;
+                case "Q":
+                case "QUIT":
+                case "EXIT":
+                    return Move.QUIT;
                 default:
                     System.out.println("Invalid move: " + token);
             }
