@@ -88,7 +88,7 @@ public class ConsoleUI {
     }
 
     private String formatCard(Card card) {
-        return card.getRank() + " of " + card.getSuit();
+        return card.toString();
     }
 
     private String getRoundResultMessage(RoundResult result) {
