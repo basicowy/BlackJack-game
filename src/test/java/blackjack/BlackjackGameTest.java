@@ -34,7 +34,7 @@ class BlackjackGameTest {
         ));
 
         game.startRound(20);
-        game.playerStand();
+        game.playerMove(Move.STAND);
 
         assertEquals(GameState.RESOLVED, game.getState());
         assertEquals(RoundResult.PLAYER_WIN, game.getLastResult());
@@ -51,7 +51,7 @@ class BlackjackGameTest {
         ));
 
         game.startRound(10);
-        game.playerHit();
+        game.playerMove(Move.HIT);
 
         assertEquals(GameState.RESOLVED, game.getState());
         assertEquals(RoundResult.PLAYER_BUST, game.getLastResult());

@@ -28,11 +28,10 @@ public class Main {
                 Move move = input.getMoveInput("Ruch [H] dobierz, [S] stoj, [D] podwoj, [Q] wyjdz: ");
 
                 switch (move) {
-                    case HIT -> game.playerHit();
-                    case STAND -> game.playerStand();
+                    case HIT, STAND -> game.playerMove(move);
                     case DOUBLE -> {
                         if (game.canPlayerDoubleDown()) {
-                            game.playerDoubleDown();
+                            game.playerMove(move);
                         } else {
                             ui.displayMessage("Nie mozesz teraz podwoic zakladu.");
                         }
