@@ -31,9 +31,20 @@ public class Hand {
             return manualScore;
         }
 
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
+
+        long acesCount = cards.stream()
+                .filter(card -> card.getRank() == Rank.ACE)
+                .count();
+
+        while (sum > 21 && acesCount > 0) {
+            sum -= 10;
+            acesCount--;
+        }
+
+        return sum;
     }
 
     public int getScore() {
@@ -45,5 +56,32 @@ public class Hand {
             throw new IllegalArgumentException("Score cannot be negative");
         }
         manualScore = score;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && getBestValue() == 21;
+    }
+
+    public boolean isBust() {
+        return getBestValue() > 21;
+    }
+
+    public boolean isSoft() {
+        int sum = 0;
+        int acesCount = 0;
+
+        for (Card card : cards) {
+            sum += card.getValue();
+            if (card.getRank() == Rank.ACE) {
+                acesCount++;
+            }
+        }
+
+        while (sum > 21 && acesCount > 0) {
+            sum -= 10;
+            acesCount--;
+        }
+
+        return acesCount > 0;
     }
 }
