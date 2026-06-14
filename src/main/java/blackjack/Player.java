@@ -1,7 +1,7 @@
 package blackjack;
 
 public class Player {
-    private Hand hand;
+    private final Hand hand;
     private int balance;
     private int currentBet;
 
@@ -37,6 +37,10 @@ public class Player {
         currentBet += acceptedBet;
     }
 
+    public boolean canDoubleDown() {
+        return currentBet > 0 && balance >= currentBet;
+    }
+
     public void winBet() {
         balance += currentBet * 2;
         currentBet = 0;
@@ -52,7 +56,7 @@ public class Player {
     }
 
     public void resetForNewRound() {
-        hand = new Hand();
+        hand.clear();
         currentBet = 0;
     }
 }
