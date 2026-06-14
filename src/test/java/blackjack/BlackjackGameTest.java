@@ -59,6 +59,28 @@ class BlackjackGameTest {
         assertEquals(0, game.getPlayer().getCurrentBet());
     }
 
+    @Test
+    void shouldPayPlayerWhenDealerBusts() {
+        BlackjackGame game = new BlackjackGame(100, fixedDeck(
+                card(Rank.TEN),
+                card(Rank.TEN),
+                card(Rank.EIGHT),
+                card(Rank.SIX),
+                card(Rank.KING)
+        ));
+
+        game.startRound(10); // bet 10
+        assertEquals(18, game.getPlayer().getHand().getBestValue());
+        assertEquals(16, game.getDealer().getHand().getBestValue());
+
+        game.playerMove(Move.STAND);
+
+        assertEquals(GameState.RESOLVED, game.getState());
+        assertEquals(RoundResult.PLAYER_WIN, game.getLastResult());
+        assertEquals(110, game.getPlayer().getBalance());
+        assertEquals(0, game.getPlayer().getCurrentBet());
+    }
+
     private static Card card(Rank rank) {
         return new Card(Suit.SPADES, rank, rank.getValue());
     }
