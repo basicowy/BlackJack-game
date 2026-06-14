@@ -54,10 +54,10 @@ public class BlackjackGame {
         player.placeBet(bet);
         lastResult = null;
 
-        player.getHand().addCard(drawCard());
-        dealer.getHand().addCard(drawCard());
-        player.getHand().addCard(drawCard());
-        dealer.getHand().addCard(drawCard());
+        player.getHand().addCard(deck.draw());
+        dealer.getHand().addCard(deck.draw());
+        player.getHand().addCard(deck.draw());
+        dealer.getHand().addCard(deck.draw());
 
         state = GameState.PLAYER_TURN;
         if (player.getHand().getBestValue() == BLACKJACK_SCORE) {
@@ -65,35 +65,35 @@ public class BlackjackGame {
         }
     }
 
-    public void playerHit() {
+    public void playerMove(Move move) {
         ensurePlayerTurn();
 
-        player.getHand().addCard(drawCard());
-        if (isBust(player)) {
-            resolveRound();
-        }
-    }
+        switch (move) {
+            case HIT -> {
+                player.getHand().addCard(drawCard());
+                if (isBust(player)) {
+                    resolveRound();
+                }
+            }
+            case STAND -> {
+                playDealerTurn();
+                resolveRound();
+            }
+            case DOUBLE -> {
+                if (!player.canDoubleDown()) {
+                    throw new IllegalStateException("Gracz nie ma wystarczajacych srodkow na podwojenie zakladu");
+                }
+                player.placeBet(player.getCurrentBet());
+                player.getHand().addCard(drawCard());
 
-    public void playerStand() {
-        ensurePlayerTurn();
-        playDealerTurn();
-        resolveRound();
-    }
-
-    public void playerDoubleDown() {
-        ensurePlayerTurn();
-        if (!canPlayerDoubleDown()) {
-            throw new IllegalStateException("Nie mozna teraz podwoic zakladu");
-        }
-
-        player.placeBet(player.getCurrentBet());
-        player.getHand().addCard(drawCard());
-
-        if (isBust(player)) {
-            resolveRound();
-        } else {
-            playDealerTurn();
-            resolveRound();
+                if (isBust(player)) {
+                    resolveRound();
+                } else {
+                    playDealerTurn();
+                    resolveRound();
+                }
+            }
+            default -> throw new IllegalArgumentException("Nieobsługiwany ruch: " + move);
         }
     }
 
@@ -119,9 +119,17 @@ public class BlackjackGame {
         );
 
         switch (result) {
-            case PLAYER_WIN, BLACKJACK_WIN -> player.winBet();
-            case DEALER_WIN, PLAYER_BUST -> player.loseBet();
-            case PUSH -> player.pushBet();
+            case PLAYER_WIN:
+            case BLACKJACK_WIN:
+                player.winBet();
+                break;
+            case DEALER_WIN:
+            case PLAYER_BUST:
+                player.loseBet();
+                break;
+            case PUSH:
+                player.pushBet();
+                break;
         }
 
         lastResult = result;

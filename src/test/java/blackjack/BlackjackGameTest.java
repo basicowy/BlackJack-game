@@ -34,7 +34,7 @@ class BlackjackGameTest {
         ));
 
         game.startRound(20);
-        game.playerStand();
+        game.playerMove(Move.STAND);
 
         assertEquals(GameState.RESOLVED, game.getState());
         assertEquals(RoundResult.PLAYER_WIN, game.getLastResult());
@@ -51,11 +51,39 @@ class BlackjackGameTest {
         ));
 
         game.startRound(10);
-        game.playerHit();
+        game.playerMove(Move.HIT);
 
         assertEquals(GameState.RESOLVED, game.getState());
         assertEquals(RoundResult.PLAYER_BUST, game.getLastResult());
         assertEquals(90, game.getPlayer().getBalance());
+        assertEquals(0, game.getPlayer().getCurrentBet());
+    }
+
+    @Test
+    void shouldPayPlayerWhenDealerBusts() {
+        BlackjackGame game = new BlackjackGame(100, fixedDeck(
+                card(Rank.TEN),
+                card(Rank.TEN),
+                card(Rank.EIGHT),
+                card(Rank.SIX),
+                card(Rank.KING),
+
+                card(Rank.TWO),
+                card(Rank.THREE),
+                card(Rank.FOUR),
+                card(Rank.FIVE),
+                card(Rank.SEVEN)
+        ));
+
+        game.startRound(10);
+        assertEquals(18, game.getPlayer().getHand().getBestValue());
+        assertEquals(16, game.getDealer().getHand().getBestValue());
+
+        game.playerMove(Move.STAND);
+
+        assertEquals(GameState.RESOLVED, game.getState());
+        assertEquals(RoundResult.PLAYER_WIN, game.getLastResult());
+        assertEquals(110, game.getPlayer().getBalance());
         assertEquals(0, game.getPlayer().getCurrentBet());
     }
 
